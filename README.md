@@ -8,7 +8,7 @@ en local dentro de un contenedor Docker.
 
 # Documentación
 
-La Api consta de un endpoint que administran los usuarios
+La Api consta de varios endpoints que administran los usuarios
 
 ## URL > http://localhost:4000/graphql 
 
