@@ -8,11 +8,11 @@ en local dentro de un contenedor Docker.
 
 # Documentación
 
-La Api consta de un endpoint que valida el usuario
+La Api consta de un endpoint que administran los usuarios
 
 ## URL > http://localhost:4000/graphql 
 
-### POST
+### Login
 
 REQUEST:
 ```
@@ -21,33 +21,38 @@ REQUEST:
         message
       }
     }
-  variables: {
-    user: 'misatrincado',
-    pass: '123'
-  }
 ```
 
-Auth exitoso
-```json
-{
-  "data": {
-    "login": {
-      "message": "Logeado!🎊",
-      "status": true
+### ObtainUsers
+
+REQUEST:
+```
+ query {
+    obtainUsers {
+      id,
+      user,
+      email,
     }
   }
-}
-
 ```
 
-Auth Error
-```json
-{
-  "data": {
-    "login": {
-      "message": "No existe el usuario 😞",
-      "status": false
-    }
+
+### CreateUser
+
+REQUEST:
+```
+  query Login($user: String!, $email: String!, $pass: String!) {
+      createUser(user: $user, email: $email ,pass: $pass)
   }
-}
 ```
+
+
+### UpdateUser
+
+REQUEST:
+```
+   mutation UpdateUser($id: Int!, $user: String, $email: String) {
+      updateUser(id: $id,user: $user, email: $email)
+    }
+```
+

@@ -12,9 +12,21 @@ var schema = buildSchema(`
       status: Boolean!
   }
 
+  type ObtainUsers {
+    id: Int!,
+    user: String!,
+    email: String!,
+    pass: String!
+  }
+
   type Query {
     login(user : String, pass: String): Login
-    createUser(user:String, email:String, pass:String): String
+    createUser(user:String!, email:String!, pass:String!): String
+    obtainUsers : [ObtainUsers!]!
+  }
+
+  type Mutation {
+    updateUser(id: Int!, user: String, email: String, pass: String) : String
   }
 `);
 
@@ -31,7 +43,17 @@ var root = {
     const key = 'INSERT INTO users (user, email, pass) VALUES (?,?,?);'
     await query(key, [user, email, pass])
     return 'Creado!';
-  }
+  },
+  obtainUsers: async () => {
+    const key = 'SELECT * FROM users;';
+    const rows = await query(key)
+    return rows;
+  },
+  updateUser: async ({ id, user, email }) => {
+    const key = 'UPDATE users SET user=?, email=? WHERE id=?';
+    const rows = await query(key, [user, email, id])
+    return 'Actualizado!';
+  },
 };
 
 var app = express();
